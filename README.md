@@ -1,1 +1,1 @@
-# This repository features a project focused on image segmentation using the U-Net architecture. U-Net is a convolutional neural network specifically designed for biomedical image segmentation. It has demonstrated high effectiveness in various image segmentation tasks, delivering precise and accurate results.
+
