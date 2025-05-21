@@ -1,11 +1,11 @@
 """
-Image segmentation using UNet
+Sample code for semantic image segmentation using UNet
 
 Step-by-step Outline:
 1. Load, split, and process the dataset
 2. Build UNet model and specify the loss function
 3. Train the model
-4. Show predictions and save the trained model
+4. Test the model
 """
 
 from matplotlib import pyplot as plt
@@ -48,6 +48,13 @@ plt.show()
 # Create a TensorFlow dataset object from a list of file paths
 dataset = tf.data.Dataset.from_tensor_slices((image_paths_list, mask_paths_list))  # No shuffling: order is maintained
 
+# image_list_ds = tf.data.Dataset.list_files(image_list, shuffle=False)
+# mask_list_ds = tf.data.Dataset.list_files(mask_list, shuffle=False)
+#
+# for path in zip(image_list_ds.take(3), mask_list_ds.take(3)):
+#     print(path)
+#
+# dataset = tf.data.Dataset.from_tensor_slices((image_list_ds, mask_list_ds))
 for start_ind, (image, mask) in enumerate(dataset.take(3)):
     print(f"Image{start_ind}: {image}")
     print(f"Mask{start_ind}: {mask}")
@@ -116,6 +123,7 @@ plt.tight_layout()
 plt.show()
 
 # First let's focus on building the encoder block
+# plt.imshow(plt.imread(encoder_path))
 plt.imshow(imageio.imread(encoder_path))
 plt.axis('off')
 plt.tight_layout()
@@ -258,8 +266,6 @@ img_height, img_width, num_channels = 96, 128, 3
 unet = unet_model((img_height, img_width, num_channels), n_filters=32, n_classes=23)
 unet.summary()
 
-
-# TRAIN THE MODEL
 # optimizer = tf.keras.optimizers.legacy.Adam(learning_rate=0.001)
 # Define the loss
 unet.compile(optimizer='adam',
@@ -323,7 +329,6 @@ def history_plots(model_history):
 history_plots(unet_history)
 
 
-# SHOW PREDICTIONS AND SAVE TRAINED MODEL
 def display(display_list):
     """
     Display a list of images side by side.
